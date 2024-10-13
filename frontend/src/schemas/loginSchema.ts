@@ -1,7 +1,9 @@
 import { z } from "zod";
-import { AccountDetailsSchema, PasswordSchema } from "./baseSchema.ts";
+import { AccountDetailsSchema } from "./baseSchema.ts";
 
 export const LoginSchema = z.object({
   username: AccountDetailsSchema.shape.username,
-  passwordData: PasswordSchema,
+  password: z
+    .string({ required_error: "Password is required" })
+    .min(6, { message: "Password must be at least 6 characters long" }),
 });

@@ -1,5 +1,5 @@
-import {PropsWithChildren} from "react";
+import { PropsWithChildren } from "react";
 
-export default function Error({children}: PropsWithChildren) {
-    return <span className="text-red-500 mt-0.5">{children}</span>
+export default function Error({ children }: PropsWithChildren) {
+  return <span className="text-red-500 mt-0.5">{children}</span>;
 }
