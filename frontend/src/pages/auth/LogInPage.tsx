@@ -3,9 +3,13 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {LoginSchema} from "../../schemas";
 import {z} from "zod";
+import {useNavigate} from "react-router-dom";
+import {PATHS} from "../../utils";
 
 export default function LogInPage() {
     type LoginData = z.infer<typeof LoginSchema>;
+
+    const navigate = useNavigate();
 
     const {
         register,
@@ -17,6 +21,7 @@ export default function LogInPage() {
 
     const onSubmit: SubmitHandler<LoginData> = (data) => {
         console.log(data);
+        navigate(PATHS["CREATE-PROFILE"])
         reset();
     };
 
