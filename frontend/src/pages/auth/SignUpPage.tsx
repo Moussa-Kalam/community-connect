@@ -5,7 +5,7 @@ import {useState} from "react";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {SignUpSchema} from "../../schemas";
 import {z} from "zod";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 export default function SignUpPage() {
     const [currentStep, setCurrentStep] = useState(1);
@@ -70,7 +70,7 @@ export default function SignUpPage() {
                 <div className="flex flex-col space-y-10">
                     <Stepper step={currentStep}/>
                     <form
-                        className="flex flex-col gap-2 space-y-1"
+                        className="flex flex-col gap-2"
                         onSubmit={handleSubmit(onSubmit)}
                     >
                         {/* Personal Information */}
@@ -185,7 +185,7 @@ export default function SignUpPage() {
                             />
                         )}
 
-                        <div className="flex ws-full justify-between">
+                        <div className="flex w-full justify-between mt-10">
                             {currentStep < 6 && (
                                 <button
                                     className="btn btn-secondary w-1/3"
@@ -206,9 +206,13 @@ export default function SignUpPage() {
                                 </button>
                             )}
                         </div>
+                        <p className='text-gray-500 text-sm mt-6'>Already have an account? <Link
+                            className='hover:underline hover:underline-offset-4 text-secondary'
+                            to={PATHS.LOGIN}>Log
+                            In</Link></p>
 
                         {currentStep === 6 && (
-                            <button className="btn btn-primary" type="submit">
+                            <button className="btn btn-primary w-full" type="submit">
                                 Create your account
                             </button>
                         )}

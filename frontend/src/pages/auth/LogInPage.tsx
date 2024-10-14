@@ -3,7 +3,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {LoginSchema} from "../../schemas";
 import {z} from "zod";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {PATHS} from "../../utils";
 
 export default function LogInPage() {
@@ -55,9 +55,14 @@ export default function LogInPage() {
                             errors={errors.password?.message}
                             register={register}
                         />
-                        <button className="btn btn-primary" type="submit">
-                            Log In
-                        </button>
+                        <div className='space-y-3'>
+                            <button className="btn btn-primary w-full" type="submit">
+                                Log In
+                            </button>
+                            <p className='text-gray-500 text-sm'>Don't have an account? <Link
+                                className='hover:underline hover:underline-offset-4 text-secondary'
+                                to={PATHS.REGISTER}>Create one</Link></p>
+                        </div>
                     </form>
                 </div>
             </section>
