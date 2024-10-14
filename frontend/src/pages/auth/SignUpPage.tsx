@@ -206,10 +206,10 @@ export default function SignUpPage() {
                                 </button>
                             )}
                         </div>
-                        <p className='text-gray-500 text-sm mt-6'>Already have an account? <Link
+                        {currentStep < 2 && (<p className='text-gray-500 text-sm mt-6'>Already have an account? <Link
                             className='hover:underline hover:underline-offset-4 text-secondary'
                             to={PATHS.LOGIN}>Log
-                            In</Link></p>
+                            In</Link></p>)}
 
                         {currentStep === 6 && (
                             <button className="btn btn-primary w-full" type="submit">
