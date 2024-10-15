@@ -2,9 +2,10 @@ import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { SignUpDto } from './dto/sign-up.dto';
 import { SignInDto } from './dto/sign-in.dto';
-import { Auth } from './decorators/auth.decorator';
 import { AuthType } from '../../users/enums';
+import { Auth } from './decorators/auth.decorator';
 
+// Add this decorator to make a controller public
 @Auth(AuthType.None)
 @Controller('authentication')
 export class AuthenticationController {
