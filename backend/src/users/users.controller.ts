@@ -12,11 +12,18 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ActiveUser } from '../iam/decorators/active-user.decorator';
 import { ActiveUserData } from '../iam/interfaces/active-user-data.interface';
+import { Roles } from '../iam/authorization/decorators/roles.decorator';
+import { UserRoles } from './enums';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  // This is temporary
+  // TODO: To be replaced with a proper role-based authorization
+  // This is how you can protect a route with a specific role
+  // In the case below, only users with the role BUSINESS can access this route
+  @Roles(UserRoles.BUSINESS)
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
