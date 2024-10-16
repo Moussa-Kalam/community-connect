@@ -15,4 +15,9 @@ export interface ActiveUserData {
    * The role of the subject
    */
   role: UserRoles;
+
+  /**
+   * The username of the subject
+   */
+  username: string;
 }
