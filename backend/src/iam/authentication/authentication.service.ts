@@ -31,6 +31,7 @@ export class AuthenticationService {
       user.firstName = signUpDto.firstName;
       user.lastName = signUpDto.lastName;
       user.email = signUpDto.email;
+      user.username = signUpDto.username;
       user.password = await this.hashingService.hash(signUpDto.password);
       user.accountType = signUpDto.accountType;
 
@@ -66,6 +67,7 @@ export class AuthenticationService {
         sub: user.id,
         email: user.email,
         role: user.accountType,
+        username: user.username,
       } as ActiveUserData,
       {
         audience: this.jwtConfiguration.audience,
