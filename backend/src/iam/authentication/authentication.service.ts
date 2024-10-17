@@ -30,8 +30,9 @@ export class AuthenticationService {
       const user = new User();
       user.firstName = signUpDto.firstName;
       user.lastName = signUpDto.lastName;
-      user.email = signUpDto.email;
       user.username = signUpDto.username;
+      user.email = signUpDto.email;
+      user.phoneNumber = signUpDto.phoneNumber;
       user.password = await this.hashingService.hash(signUpDto.password);
       user.accountType = signUpDto.accountType;
 
