@@ -1,9 +1,15 @@
-import { IsNotEmpty, IsOptional, IsString, IsUrl } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUrl,
+} from 'class-validator';
 import { ActivityCategories } from '../enums/activityCategories.enum';
 
 export class CreateProfileDto {
   @IsString()
-  name: string;
+  activityName: string;
 
   @IsString()
   @IsOptional()
@@ -16,6 +22,7 @@ export class CreateProfileDto {
   phoneNumber: string;
 
   @IsNotEmpty()
+  @IsEnum(ActivityCategories)
   activityCategory: ActivityCategories;
 
   @IsUrl()

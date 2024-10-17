@@ -4,7 +4,8 @@ const PATHS = {
   REGISTER: "/register",
   "CREATE-PROFILE": "/create-profile",
   "MANAGE-PROFILE": "/manage-profile",
-  NOT_FOUND: "/404",
+  SERVICES: "/services",
+  BOOKINGS: "/bookings",
 } as const;
 
 export default PATHS;

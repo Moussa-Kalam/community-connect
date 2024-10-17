@@ -1,2 +1,3 @@
-export { SignUpSchema } from "./signupSchema.ts";
-export { LoginSchema } from "./loginSchema.ts";
+export { SignUpSchema } from "./signupSchema";
+export { LoginSchema } from "./loginSchema";
+export { ProfileSchema } from "./profileSchema";
