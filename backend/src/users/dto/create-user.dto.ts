@@ -22,6 +22,9 @@ export class CreateUserDto {
   email: string;
 
   @IsString()
+  phoneNumber: string;
+
+  @IsString()
   @MinLength(8)
   @MaxLength(16)
   password: string;
