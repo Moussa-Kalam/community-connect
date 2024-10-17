@@ -1,18 +1,19 @@
 import {SubmitHandler, useForm} from "react-hook-form";
-import {Input, Select, Stepper, TextArea} from "../../components/ui";
+import {Input, Select, Stepper} from "../../components/ui";
 import {AccountTypes, PATHS} from "../../utils";
 import {useState} from "react";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {SignUpSchema} from "../../schemas";
 import {z} from "zod";
 import {Link, useNavigate} from "react-router-dom";
+import {SignUpData} from "../../utils/api.ts";
+import {useAuth} from "../../hooks";
 
 export default function SignUpPage() {
+    const {isSignUpLoading: isLoading, signUp} = useAuth()
     const [currentStep, setCurrentStep] = useState(1);
 
-    const navigate = useNavigate()
-
-    type SignUpData = z.infer<typeof SignUpSchema>;
+    const navigate = useNavigate();
 
     const {
         register,
@@ -29,12 +30,10 @@ export default function SignUpPage() {
         number,
         Array<keyof SignUpData | `passwordData.${keyof PasswordData}`>
     > = {
-        1: ["firstName", "lastName"],
-        2: ["username", "phoneNumber"],
-        3: ["email", "location"],
-        4: ["accountType"],
-        5: ["passwordData.password", "passwordData.confirmPassword"],
-        6: ["bio"],
+        1: ["firstName", "lastName", "username"],
+        2: ["email", "phoneNumber"],
+        3: ["accountType"],
+        4: ["passwordData.password", "passwordData.confirmPassword"],
     };
 
     const handleNextStep = async () => {
@@ -50,15 +49,16 @@ export default function SignUpPage() {
         setCurrentStep((prev) => prev - 1);
     };
 
-    const onSubmit: SubmitHandler<SignUpData> = (data) => {
-        console.log(data);
-        navigate(PATHS.LOGIN)
-        reset();
+    const onSubmit: SubmitHandler<SignUpData> = async (data) => {
+        // Create a new user
+        await signUp(data);
 
+        navigate(PATHS.LOGIN);
+        reset();
     };
 
     return (
-        <div className="flex justify-center items-center w-3/5 mx-auto overflow-scroll p-10 h-screen">
+        <div className="flex justify-center items-center w-3/4 mx-auto overflow-scroll p-10 h-screen">
             <section className="flex flex-col gap-10  py-16 px-10 justify-center shadow-lg bg-white rounded">
                 <div className="space-y-3">
                     <h1 className="text-4xl font-semibold mb-4">Create an account</h1>
@@ -90,13 +90,6 @@ export default function SignUpPage() {
                                     errors={errors.lastName?.message}
                                     register={register}
                                 />
-                            </>
-                        )}
-
-                        {/* Account Details */}
-                        {currentStep === 2 && (
-                            <>
-                                {" "}
                                 <Input
                                     label="Username"
                                     placeholder="Enter your username"
@@ -104,6 +97,13 @@ export default function SignUpPage() {
                                     errors={errors.username?.message}
                                     register={register}
                                 />
+                            </>
+                        )}
+
+                        {/* Contact Information */}
+                        {currentStep === 2 && (
+                            <>
+                                {" "}
                                 <Input
                                     label="Phone number"
                                     placeholder="Enter your phone number"
@@ -111,13 +111,6 @@ export default function SignUpPage() {
                                     errors={errors.phoneNumber?.message}
                                     register={register}
                                 />
-                            </>
-                        )}
-
-                        {/* Contact Information */}
-                        {currentStep === 3 && (
-                            <>
-                                {" "}
                                 <Input
                                     label="Email"
                                     placeholder="Enter your email"
@@ -126,24 +119,19 @@ export default function SignUpPage() {
                                     errors={errors.email?.message}
                                     register={register}
                                 />
-                                <Input
-                                    label="Location"
-                                    placeholder="Enter your location"
-                                    name="location"
-                                    errors={errors.location?.message}
-                                    register={register}
-                                />
                             </>
                         )}
 
                         {/* Account Type */}
-                        {currentStep === 4 && (
+                        {currentStep === 3 && (
                             <Select
                                 label="Account Type"
                                 name="accountType"
+                                errors={errors.accountType?.message}
                                 register={register}
+                                defaultValue=""
                             >
-                                <option disabled selected>
+                                <option disabled value="">
                                     Choose a type
                                 </option>
                                 {AccountTypes.map((type) => (
@@ -153,7 +141,7 @@ export default function SignUpPage() {
                         )}
 
                         {/* Account security */}
-                        {currentStep === 5 && (
+                        {currentStep === 4 && (
                             <>
                                 <Input
                                     label="Password"
@@ -174,19 +162,8 @@ export default function SignUpPage() {
                             </>
                         )}
 
-                        {/* Bio */}
-                        {currentStep === 6 && (
-                            <TextArea
-                                label="Bio"
-                                placeholder="Tell us about yourself"
-                                name="bio"
-                                errors={errors.bio?.message}
-                                register={register}
-                            />
-                        )}
-
                         <div className="flex w-full justify-between mt-10">
-                            {currentStep < 6 && (
+                            {currentStep < 4 && (
                                 <button
                                     className="btn btn-secondary w-1/3"
                                     type="button"
@@ -196,7 +173,7 @@ export default function SignUpPage() {
                                     Previous
                                 </button>
                             )}
-                            {currentStep < 6 && (
+                            {currentStep < 4 && (
                                 <button
                                     className="btn btn-primary w-1/3"
                                     type="button"
@@ -206,15 +183,32 @@ export default function SignUpPage() {
                                 </button>
                             )}
                         </div>
-                        {currentStep < 2 && (<p className='text-gray-500 text-sm mt-6'>Already have an account? <Link
-                            className='hover:underline hover:underline-offset-4 text-secondary'
-                            to={PATHS.LOGIN}>Log
-                            In</Link></p>)}
+                        {currentStep < 2 && (
+                            <p className="text-gray-500 text-sm mt-6">
+                                Already have an account?{" "}
+                                <Link
+                                    className="hover:underline hover:underline-offset-4 text-secondary"
+                                    to={PATHS.LOGIN}
+                                >
+                                    Log In
+                                </Link>
+                            </p>
+                        )}
 
-                        {currentStep === 6 && (
-                            <button className="btn btn-primary w-full" type="submit">
-                                Create your account
-                            </button>
+                        {currentStep === 4 && (
+                            <div className="flex w-full justify-between mt-10">
+                                <button
+                                    className="btn btn-secondary w-1/3"
+                                    type="button"
+                                    onClick={handlePreviousStep}
+                                    disabled={currentStep <= 1}
+                                >
+                                    Previous
+                                </button>
+                                <button className="btn btn-primary w-1/3" type="submit">
+                                    {isLoading ? 'Creating...' : 'Create Account'}
+                                </button>
+                            </div>
                         )}
                     </form>
                 </div>
