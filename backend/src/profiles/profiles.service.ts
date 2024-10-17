@@ -12,7 +12,9 @@ export class ProfilesService {
     private readonly profileRepository: Repository<Profile>,
   ) {}
 
-  async create(createProfileDto: CreateProfileDto): Promise<Profile> {
+  async create(
+    createProfileDto: CreateProfileDto & { userId: number },
+  ): Promise<Profile> {
     const newProfile = this.profileRepository.create(createProfileDto);
     return this.profileRepository.save(newProfile);
   }

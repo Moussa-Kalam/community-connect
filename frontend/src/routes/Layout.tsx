@@ -1,23 +1,15 @@
-import {Navigate, Outlet} from "react-router-dom";
-import {PATHS} from "../utils";
-import {useAuth} from "../hooks";
+import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from "../hooks";
+import { PATHS } from "../utils";
 
 export default function Layout() {
-    const {token} = useAuth()
+  const { token } = useAuth();
 
-    if (token) return <Navigate to={PATHS["CREATE-PROFILE"]}/>;
+  if (token) return <Navigate to={PATHS.HOME} />;
 
-    return (
-        <>
-            <header>
-                <nav>This is the navigation</nav>
-            </header>
-            <main>
-                <Outlet/>
-            </main>
-            <footer>
-                <p>This is the footer</p>
-            </footer>
-        </>
-    );
+  return (
+    <main>
+      <Outlet />
+    </main>
+  );
 }

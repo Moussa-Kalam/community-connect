@@ -1,10 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { UserRoles } from '../enums';
 import { Profile } from '../../profiles/entities/profile.entity';
 import { Exclude } from 'class-transformer';
@@ -45,6 +39,5 @@ export class User {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  @JoinColumn()
   profile: Profile;
 }
