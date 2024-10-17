@@ -2,13 +2,13 @@ import {Input} from "../../components/ui";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {LoginSchema} from "../../schemas";
-import {z} from "zod";
 import {Link, useNavigate} from "react-router-dom";
 import {PATHS} from "../../utils";
+import {useAuth} from "../../hooks";
+import {LoginData} from "../../utils/api.ts";
 
 export default function LogInPage() {
-    type LoginData = z.infer<typeof LoginSchema>;
-
+    const {isLoginLoading: isLoading, login} = useAuth()
     const navigate = useNavigate();
 
     const {
@@ -18,11 +18,13 @@ export default function LogInPage() {
         formState: {errors},
     } = useForm<LoginData>({resolver: zodResolver(LoginSchema)});
 
+    const onSubmit: SubmitHandler<LoginData> = async (data) => {
+        console.log(data)
+        await login(data);
 
-    const onSubmit: SubmitHandler<LoginData> = (data) => {
-        console.log(data);
-        navigate(PATHS["CREATE-PROFILE"])
+        navigate(PATHS["CREATE-PROFILE"]);
         reset();
+
     };
 
     return (
@@ -43,9 +45,10 @@ export default function LogInPage() {
                         onSubmit={handleSubmit(onSubmit)}
                     >
                         <Input
-                            label="Username"
-                            name="username"
-                            errors={errors.username?.message}
+                            type='email'
+                            label="Email Address"
+                            name="email"
+                            errors={errors.email?.message}
                             register={register}
                         />
                         <Input
@@ -55,13 +58,19 @@ export default function LogInPage() {
                             errors={errors.password?.message}
                             register={register}
                         />
-                        <div className='space-y-3'>
+                        <div className="space-y-3">
                             <button className="btn btn-primary w-full" type="submit">
-                                Log In
+                                {isLoading ? "Loading..." : "Log in"}
                             </button>
-                            <p className='text-gray-500 text-sm'>Don't have an account? <Link
-                                className='hover:underline hover:underline-offset-4 text-secondary'
-                                to={PATHS.REGISTER}>Create one</Link></p>
+                            <p className="text-gray-500 text-sm">
+                                Don't have an account?{" "}
+                                <Link
+                                    className="hover:underline hover:underline-offset-4 text-secondary"
+                                    to={PATHS.REGISTER}
+                                >
+                                    Create one
+                                </Link>
+                            </p>
                         </div>
                     </form>
                 </div>

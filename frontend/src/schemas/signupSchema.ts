@@ -1,21 +1,24 @@
 import { z } from "zod";
 import {
-  AccountDetailsSchema,
   AccountTypeSchema,
-  BioSchema,
   ContactInfoSchema,
   PasswordSchema,
   PersonalInfoSchema,
 } from "./baseSchema.ts";
 
 export const SignUpSchema = z.object({
+  // Personal Information
   firstName: PersonalInfoSchema.shape.firstName,
   lastName: PersonalInfoSchema.shape.lastName,
-  username: AccountDetailsSchema.shape.username,
-  phoneNumber: AccountDetailsSchema.shape.phoneNumber,
+  username: PersonalInfoSchema.shape.username,
+
+  // Contact Information
   email: ContactInfoSchema.shape.email,
-  location: ContactInfoSchema.shape.location,
+  phoneNumber: ContactInfoSchema.shape.phoneNumber,
+
+  // Account Details Information
   accountType: AccountTypeSchema,
+
+  // Security Information
   passwordData: PasswordSchema,
-  bio: BioSchema.shape.bio,
 });
