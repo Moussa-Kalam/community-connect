@@ -38,8 +38,11 @@ export class Profile {
   website: string;
 
   @OneToOne(() => User, (user) => user.profile)
-  @JoinColumn()
+  @JoinColumn({ name: 'userId' })
   user: User;
+
+  @Column()
+  userId: number;
 
   @OneToMany(() => Service, (service) => service.profile)
   services: Service[];
