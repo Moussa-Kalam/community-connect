@@ -21,19 +21,19 @@ export default function NavigationBar() {
     const {userRole} = useActiveUser();
     return (
         <nav className="flex flex-col h-screen py-10 px-4">
-            <ul className="">
+            <ul className="space-y-3">
                 {links.map((link) => (
                     <NavigationLink key={link.text} text={link.text} to={link.to}>
                         {link.icon}
                     </NavigationLink>
                 ))}
                 {userRole !== "Consumer" && (
-                    <NavigationLink text="Profile" to={PATHS["CREATE-PROFILE"]}>
+                    <NavigationLink text="Profile" to={PATHS.PROFILE}>
                         <BsFillPersonFill/>
                     </NavigationLink>
                 )}
             </ul>
-            <button className="btn btn-error mt-auto" onClick={logout}>
+            <button className="btn bg-red-500 text-white mt-auto" onClick={logout}>
                 Logout
             </button>
         </nav>

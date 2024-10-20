@@ -30,4 +30,7 @@ export class Service {
     onDelete: 'CASCADE',
   })
   profile: Profile;
+
+  @Column()
+  profileId: number;
 }

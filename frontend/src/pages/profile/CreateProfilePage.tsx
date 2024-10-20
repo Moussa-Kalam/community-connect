@@ -4,11 +4,12 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {ProfileSchema} from "../../schemas";
 import {ProfileData} from "../../utils/api.ts";
 import {ActivityCategories, PATHS} from "../../utils";
-import {useActiveUser, useProfile} from "../../hooks";
+import {useActiveUser} from "../../hooks";
 import {useNavigate} from "react-router-dom";
+import {useCreateProfile} from "../../hooks/profiles";
 
 export default function CreateProfilePage() {
-    const {isCreatingProfile: isLoading, createProfile} = useProfile();
+    const {isLoading, createProfile} = useCreateProfile();
     const {
         register,
         handleSubmit,
@@ -24,14 +25,14 @@ export default function CreateProfilePage() {
     const onSubmit: SubmitHandler<ProfileData> = async (data) => {
         await createProfile(data);
 
-        navigate(PATHS.HOME)
+        navigate(PATHS.PROFILE)
         reset();
     };
 
     return (
         <div>
             <h1>My profile</h1>
-            <form className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
+            <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
                 <Input
                     label="Activity Name"
                     name="activityName"
@@ -75,7 +76,7 @@ export default function CreateProfilePage() {
                     errors={errors.website?.message}
                     register={register}
                 />
-                <button className="btn btn-primary">
+                <button className="btn btn-primary mt-6">
                     {isLoading ? "Creating..." : "Create Profile"}
                 </button>
             </form>
