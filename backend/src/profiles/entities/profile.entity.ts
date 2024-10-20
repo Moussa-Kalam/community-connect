@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -15,7 +16,7 @@ export class Profile {
   id: number;
 
   @Column()
-  name: string;
+  activityName: string;
 
   @Column({ nullable: true })
   bio: string;
@@ -37,7 +38,11 @@ export class Profile {
   website: string;
 
   @OneToOne(() => User, (user) => user.profile)
+  @JoinColumn({ name: 'userId' })
   user: User;
+
+  @Column()
+  userId: number;
 
   @OneToMany(() => Service, (service) => service.profile)
   services: Service[];

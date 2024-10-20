@@ -10,7 +10,7 @@ import {SignUpData} from "../../utils/api.ts";
 import {useAuth} from "../../hooks";
 
 export default function SignUpPage() {
-    const {isSignUpLoading: isLoading, signUp} = useAuth()
+    const {isSignUpLoading: isLoading, signUp} = useAuth();
     const [currentStep, setCurrentStep] = useState(1);
 
     const navigate = useNavigate();
@@ -59,6 +59,7 @@ export default function SignUpPage() {
 
     return (
         <div className="flex justify-center items-center w-3/4 mx-auto overflow-scroll p-10 h-screen">
+
             <section className="flex flex-col gap-10  py-16 px-10 justify-center shadow-lg bg-white rounded">
                 <div className="space-y-3">
                     <h1 className="text-4xl font-semibold mb-4">Create an account</h1>
@@ -206,7 +207,7 @@ export default function SignUpPage() {
                                     Previous
                                 </button>
                                 <button className="btn btn-primary w-1/3" type="submit">
-                                    {isLoading ? 'Creating...' : 'Create Account'}
+                                    {isLoading ? "Creating..." : "Create Account"}
                                 </button>
                             </div>
                         )}
