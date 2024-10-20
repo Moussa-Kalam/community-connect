@@ -2,7 +2,9 @@
 
 ## Description
 
-**Community Connect** is a platform that connects local businesses, artisans, and service providers with their immediate community. The application will allow users to discover local businesses and services within their area, book appointments, and interact directly with service providers through a chat interface.
+**Community Connect** is a platform that connects local businesses, artisans, and service providers with their immediate
+community. The application will allow users to discover local businesses and services within their area, book
+appointments, and interact directly with service providers through a chat interface.
 
 ## Key Features
 
@@ -10,9 +12,13 @@
 2. Profile Management
 3. Search and Discovery
 4. Booking System
-5. Real-time Chat
+5. Real-time Chat (In-progress)
 6. Ratings and Reviews
 
+## Learn more about each part of the application
+
+- [Community Connect Backend](backend)
+- [Community Connect Frontend](frontend)
 
 ## Contributing
 
@@ -41,11 +47,11 @@
 
 4. **Create a Pull Request**
 
-   - Go to the repository on GitHub
-   - Click on the `Pull Requests` tab
-   - Click on the `New Pull Request` button
-   - Select the `dev` branch as the base branch
-   - Select your branch as the compare branch
-   - Click on the `Create Pull Request` button
-   - Add a title and description to your pull request
-   - Click on the `Create Pull Request` button
+    - Go to the repository on GitHub
+    - Click on the `Pull Requests` tab
+    - Click on the `New Pull Request` button
+    - Select the `dev` branch as the base branch
+    - Select your branch as the compare branch
+    - Click on the `Create Pull Request` button
+    - Add a title and description to your pull request
+    - Click on the `Create Pull Request` button
