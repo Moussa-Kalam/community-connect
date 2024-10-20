@@ -1,13 +1,14 @@
 # Community Connect Frontend
 
-This is the frontend repository for the Community Connect project. The frontend is built with React, TypeScript, and Redux for state management.
+This is the frontend repository for the Community Connect project. The frontend is built with React, TypeScript, and
+Redux for state management.
 
 ## Technologies
 
 1. React
 2. TypeScript
 3. Redux for state management
-4. Styled Components for styling
+4. Tailwindcss for styling
 
 ## Installation
 
