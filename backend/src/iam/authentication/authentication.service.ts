@@ -40,7 +40,11 @@ export class AuthenticationService {
     } catch (err) {
       const pgUniqueViolationErrorCode = '23505';
       if (err.code === pgUniqueViolationErrorCode) {
-        throw new ConflictException('User with this email already exists');
+        throw new ConflictException(
+          'User with this email or username already exists',
+        );
+      } else {
+        console.error(err);
       }
     }
   }

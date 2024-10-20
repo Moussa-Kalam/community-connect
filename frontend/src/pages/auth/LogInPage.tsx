@@ -8,7 +8,7 @@ import {useAuth} from "../../hooks";
 import {LoginData} from "../../utils/api.ts";
 
 export default function LogInPage() {
-    const {isLoginLoading: isLoading, login} = useAuth()
+    const {isLoginLoading: isLoading, login} = useAuth();
     const navigate = useNavigate();
 
     const {
@@ -18,13 +18,11 @@ export default function LogInPage() {
         formState: {errors},
     } = useForm<LoginData>({resolver: zodResolver(LoginSchema)});
 
+
     const onSubmit: SubmitHandler<LoginData> = async (data) => {
-        console.log(data)
         await login(data);
-
-        navigate(PATHS["CREATE-PROFILE"]);
+        navigate(PATHS.HOME);
         reset();
-
     };
 
     return (
@@ -45,7 +43,7 @@ export default function LogInPage() {
                         onSubmit={handleSubmit(onSubmit)}
                     >
                         <Input
-                            type='email'
+                            type="email"
                             label="Email Address"
                             name="email"
                             errors={errors.email?.message}

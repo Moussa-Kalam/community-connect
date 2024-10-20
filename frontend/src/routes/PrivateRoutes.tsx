@@ -6,20 +6,19 @@ import {useAuth} from "../hooks";
 export default function PrivateLayout() {
     const {token} = useAuth();
 
+
     if (!token) return <Navigate to={PATHS.LOGIN}/>;
 
+
     return (
-        <div className='grid lg:grid-cols-12 min-h-screen'>
-            <header className='border col-span-3'>
+        <div className="grid md:grid-cols-10 min-h-screen">
+            <header className="border md:col-span-2 hidden md:block">
                 <NavigationBar/>
             </header>
-            <section className='border col-span-9'>
-                <main>
+            <section className="border col-span-8 overflow-y-auto">
+                <main className="px-16 py-10">
                     <Outlet/>
                 </main>
-                <footer>
-                    <p>This is the footer</p>
-                </footer>
             </section>
         </div>
     );
