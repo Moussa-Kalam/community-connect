@@ -1,74 +1,75 @@
-import { useLocalStorage } from "usehooks-ts";
-import { useState } from "react";
-import { toast } from "react-toastify";
+import {useLocalStorage} from "usehooks-ts";
+import {useState} from "react";
+import {toast} from "react-toastify";
 import axiosInstance from "../services/api-client.ts";
-import { LoginData, SignUpData } from "../utils/api.ts";
+import {LoginData, SignUpData} from "../utils/api.ts";
 import axios from "axios";
 
 const useAuth = () => {
-  const [token, setToken, removeToken] = useLocalStorage("token", "");
-  const [isSignUpLoading, setIsSignUpLoading] = useState(false);
-  const [isLoginLoading, setIsLoginLoading] = useState(false);
+    const [token, setToken, removeToken] = useLocalStorage("token", "");
+    const [isSignUpLoading, setIsSignUpLoading] = useState(false);
+    const [isLoginLoading, setIsLoginLoading] = useState(false);
 
-  const signUp = async (data: SignUpData): Promise<void> => {
-    try {
-      setIsSignUpLoading(true);
-      await axiosInstance.post("authentication/sign-up", {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        username: data.username,
-        email: data.email,
-        phoneNumber: data.phoneNumber,
-        password: data.passwordData.password,
-        accountType: data.accountType,
-      });
 
-      toast.success("Account created successfully");
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error("Account creation failed");
-      }
-    } finally {
-      setIsSignUpLoading(false);
-    }
-  };
+    const signUp = async (data: SignUpData): Promise<void> => {
+        try {
+            setIsSignUpLoading(true);
+            await axiosInstance.post("authentication/sign-up", {
+                firstName: data.firstName,
+                lastName: data.lastName,
+                username: data.username,
+                email: data.email,
+                phoneNumber: data.phoneNumber,
+                password: data.passwordData.password,
+                accountType: data.accountType,
+            });
 
-  const login = async (data: LoginData): Promise<void> => {
-    try {
-      setIsLoginLoading(true);
-      const response = await axiosInstance.post("authentication/sign-in", {
-        ...data,
-      });
+            toast.success("Account created successfully");
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error("Account creation failed");
+            }
+        } finally {
+            setIsSignUpLoading(false);
+        }
+    };
 
-      const accessToken: string = response.data.accessToken;
+    const login = async (data: LoginData): Promise<void> => {
+        try {
+            setIsLoginLoading(true);
+            const response = await axiosInstance.post("authentication/sign-in", {
+                ...data,
+            });
 
-      // Store the JWT in localstorage
-      setToken(accessToken);
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error("Login failed");
-      }
-    } finally {
-      setIsLoginLoading(false);
-    }
-  };
+            const accessToken: string = response.data.accessToken;
 
-  const logout = () => {
-    removeToken();
-  };
+            // Store the JWT in localstorage
+            setToken(accessToken);
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error("Login failed");
+            }
+        } finally {
+            setIsLoginLoading(false);
+        }
+    };
 
-  return {
-    token,
-    isLoginLoading,
-    isSignUpLoading,
-    login,
-    signUp,
-    logout,
-  };
+    const logout = () => {
+        removeToken();
+    };
+
+    return {
+        token,
+        isLoginLoading,
+        isSignUpLoading,
+        login,
+        signUp,
+        logout,
+    };
 };
 
 export default useAuth;
